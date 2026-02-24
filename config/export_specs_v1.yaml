@@ -1,0 +1,45 @@
+version: 1
+specs:
+  ig_feed_4x5:
+    media_type: image_or_video
+    ratio: "4:5"
+    resolution: "1080x1350"
+    safe_zone: standard
+  reel_9x16:
+    media_type: video
+    ratio: "9:16"
+    resolution: "1080x1920"
+    safe_zone: reel_safe
+  yt_longform_16x9:
+    media_type: video
+    ratio: "16:9"
+    resolution: "1920x1080"
+    subtitle_burn_in: optional
+  yt_thumbnail_16x9:
+    media_type: image
+    ratio: "16:9"
+    resolution: "1280x720"
+  fb_feed_4x5:
+    media_type: image_or_video
+    ratio: "4:5"
+    resolution: "1080x1350"
+  gbp_square:
+    media_type: image
+    ratio: "1:1"
+    resolution: "1200x1200"
+  gbp_landscape:
+    media_type: image
+    ratio: "4:3"
+    resolution: "1200x900"
+  mailchimp_header_600w:
+    media_type: image
+    ratio: "auto"
+    resolution: "600xauto"
+  mailchimp_inline_1200w:
+    media_type: image
+    ratio: "auto"
+    resolution: "1200xauto"
+  patreon_post_4x5:
+    media_type: image_or_video
+    ratio: "4:5"
+    resolution: "1080x1350"

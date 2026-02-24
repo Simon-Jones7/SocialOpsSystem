@@ -1,0 +1,45 @@
+version: 1
+name: planner_settings_v1
+timezone: Europe/London
+
+planning:
+  default_horizon_days: 28
+  allowed_horizon_days: [14, 28, 56]
+  weekly_cycle_day: monday
+
+modes:
+  default: normal
+  allowed: [baseline_only, normal, event_push]
+
+scoring:
+  two_pass_scoring: true
+  secondary_platform_threshold_points: 8
+
+schedule:
+  baseline_slots:
+    - platform: instagram
+      weekday: monday
+      time_local: "18:00"
+    - platform: facebook
+      weekday: monday
+      time_local: "19:00"
+
+  extra_post_slots:
+    - weekday: thursday
+      time_local: "18:00"
+    - weekday: friday
+      time_local: "18:00"
+    - weekday: sunday
+      time_local: "17:00"
+
+email:
+  platforms: [mailchimp, patreon, eventbrite]
+  default_send_time_local: "10:00"
+  default_send_weekday: tuesday
+  minimum_spacing_hours: 48
+  patreon_early_access_default: true
+
+ui_defaults:
+  reduce_output_to_baseline_only: false
+  force_story_variant_default: false
+  lock_pinned_slots_by_default: true

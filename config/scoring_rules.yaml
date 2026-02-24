@@ -1,0 +1,70 @@
+version: 1
+candidate_generation:
+  formats_by_platform:
+    instagram: [feed_4x5, reel_9x16, carousel_4x5]
+    facebook: [feed_4x5, link_preview]
+    youtube: [longform_16x9, short_9x16]
+    google_business: [post_square, post_landscape]
+    mailchimp: [campaign_email]
+    patreon: [patron_update]
+
+urgency:
+  event_within_3_days: 30
+  event_within_7_days: 22
+  event_within_14_days: 14
+  evergreen_default: 8
+
+objective_alignment:
+  grow_youtube: 18
+  fill_screening: 20
+  community_visibility: 16
+  sell_merch: 10
+
+content_fit:
+  instagram:
+    event: 16
+    bts: 17
+    news: 15
+    recap: 14
+    merch: 11
+    film: 15
+  facebook:
+    event: 14
+    bts: 10
+    news: 13
+    recap: 12
+    merch: 9
+    film: 11
+  youtube:
+    event: 9
+    bts: 13
+    news: 8
+    recap: 14
+    merch: 5
+    film: 18
+  google_business:
+    event: 12
+    bts: 4
+    news: 9
+    recap: 7
+    merch: 4
+    film: 6
+  mailchimp:
+    event: 11
+    bts: 5
+    news: 9
+    recap: 8
+    merch: 10
+    film: 8
+  patreon:
+    event: 8
+    bts: 14
+    news: 6
+    recap: 11
+    merch: 8
+    film: 12
+
+penalties:
+  asset_fatigue_per_recent_use: 4
+  email_overlap: 15
+  cadence_saturation_soft: 6
