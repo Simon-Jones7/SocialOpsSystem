@@ -1,0 +1,31 @@
+version: 1
+templates:
+  major_event:
+    phases:
+      pre:
+        days_before: [21, 14, 7, 2]
+        suggested_items: [announcement, bts, reminder, final_push]
+      live:
+        days_before: [0]
+        suggested_items: [today_post, story_update]
+      post:
+        days_after: [1, 3]
+        suggested_items: [recap, thanks]
+    multipliers:
+      instagram: 1.2
+      facebook: 1.1
+      youtube: 1.0
+  youtube_release:
+    phases:
+      pre:
+        days_before: [3, 1]
+        suggested_items: [teaser, countdown]
+      live:
+        days_before: [0]
+        suggested_items: [launch_post]
+      post:
+        days_after: [2, 7]
+        suggested_items: [clip, recap]
+    multipliers:
+      youtube: 1.25
+      instagram: 1.1

@@ -1,0 +1,43 @@
+version: 1
+timezone: Europe/London
+
+platform_caps:
+  instagram:
+    weekly_min: 1
+    weekly_max: 4
+  facebook:
+    weekly_min: 1
+    weekly_max: 3
+  youtube:
+    weekly_min: 0
+    weekly_max: 3
+  google_business:
+    weekly_min: 0
+    weekly_max: 2
+  mailchimp:
+    monthly_min: 0
+    monthly_max: 2
+  patreon:
+    monthly_min: 0
+    monthly_max: 4
+
+baseline_slots:
+  - platform: instagram
+    weekday: monday
+    time_local: "18:00"
+  - platform: facebook
+    weekday: monday
+    time_local: "19:00"
+
+default_timing_preferences:
+  instagram: ["mon 18:00", "thu 18:00", "sun 17:00"]
+  facebook: ["mon 19:00", "fri 18:00", "sun 17:00"]
+  youtube: ["thu 18:00", "sun 17:00"]
+  google_business: ["wed 12:00"]
+  mailchimp: ["tue 10:00"]
+  patreon: ["tue 10:00", "thu 10:00"]
+
+extra_post_triggers:
+  urgent_event_within_days: 10
+  high_score_relative_threshold: 0.85
+  campaign_phase_boost_required: true

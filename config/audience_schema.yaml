@@ -1,0 +1,29 @@
+version: 1
+audiences:
+  # Mapping notes (v1 compatibility intent):
+  # - local_liverpool ~= local_audience
+  # - core_supporters ~= supporters
+  # - artists_collaborators overlaps filmmakers_local + filmmakers_global
+  # - wider_discovery can include headliner_fans + funders_and_partners in broad awareness mode
+  local_liverpool:
+    affinities:
+      instagram: 1.2
+      facebook: 1.1
+      youtube: 0.9
+      google_business: 1.1
+  artists_collaborators:
+    affinities:
+      instagram: 1.2
+      facebook: 1.0
+      youtube: 1.1
+      patreon: 1.1
+  core_supporters:
+    affinities:
+      patreon: 1.3
+      mailchimp: 1.2
+      instagram: 1.0
+  wider_discovery:
+    affinities:
+      youtube: 1.3
+      instagram: 1.1
+      facebook: 0.9
