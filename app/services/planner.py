@@ -39,7 +39,12 @@ def _check_clause(item: Item, clause: dict[str, Any]) -> bool:
     return False
 
 
-def _evaluate_dependencies(item: Item, platform: str, fmt: str, dependency_rules: list[dict[str, Any]]) -> tuple[bool, str | None]:
+def _evaluate_dependencies(
+    item: Item,
+    platform: str,
+    fmt: str,
+    dependency_rules: list[dict[str, Any]],
+) -> tuple[bool, str | None]:
     for rule in dependency_rules:
         when = rule.get("when") or {}
 
@@ -82,6 +87,8 @@ def run_planner(
     Scoring/scheduling/export logic intentionally not implemented.
     """
     items = items or []
+    campaigns = campaigns or []
+    objectives = objectives or []
     configs = configs or {}
 
     formats_by_platform: dict[str, list[str]] = (
@@ -119,8 +126,8 @@ def run_planner(
             "generated_at": datetime.utcnow().isoformat() + "Z",
             "input_counts": {
                 "items": len(items),
-                "campaigns": len(campaigns or []),
-                "objectives": len(objectives or []),
+                "campaigns": len(campaigns),
+                "objectives": len(objectives),
                 "config_files": len(configs),
             },
             "total_candidates": total_count,
