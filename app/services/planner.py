@@ -92,9 +92,9 @@ def run_planner(
     configs = configs or {}
 
     formats_by_platform: dict[str, list[str]] = (
-        ((configs.get("scoring_rules.yaml") or {}).get("candidate_generation") or {}).get("formats_by_platform") or {}
+        ((configs.get("scoring_rules") or {}).get("candidate_generation") or {}).get("formats_by_platform") or {}
     )
-    dependency_rules: list[dict[str, Any]] = ((configs.get("dependency_rules.yaml") or {}).get("rules") or [])
+    dependency_rules: list[dict[str, Any]] = ((configs.get("dependency_rules") or {}).get("rules") or [])
 
     draft_candidates: list[DraftCandidate] = []
 
