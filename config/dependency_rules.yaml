@@ -1,0 +1,38 @@
+version: 1
+rules:
+  - id: patreon_requires_ticket_link_for_event_push
+    when:
+      platform: patreon
+      item_type: event
+    require:
+      all:
+        - field: item.links.eventbrite
+          exists: true
+    on_fail:
+      blocked: true
+      message: "Patreon early-access post blocked: missing Eventbrite/live ticket link."
+
+  - id: recap_requires_source_assets
+    when:
+      item_type: recap
+    require:
+      any:
+        - field: item.assets.photo_count
+          gte: 1
+        - field: item.assets.video_count
+          gte: 1
+    on_fail:
+      blocked: true
+      message: "Recap blocked: no photo/video assets attached."
+
+  - id: youtube_upload_requires_video_asset
+    when:
+      platform: youtube
+      format: longform_16x9
+    require:
+      all:
+        - field: item.assets.video_count
+          gte: 1
+    on_fail:
+      blocked: true
+      message: "YouTube longform blocked: no video asset attached."

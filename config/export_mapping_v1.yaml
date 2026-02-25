@@ -1,0 +1,19 @@
+version: 1
+mapping:
+  instagram:
+    feed_4x5: [ig_feed_4x5]
+    reel_9x16: [reel_9x16]
+    carousel_4x5: [ig_feed_4x5]
+  facebook:
+    feed_4x5: [fb_feed_4x5]
+    link_preview: []
+  youtube:
+    longform_16x9: [yt_longform_16x9, yt_thumbnail_16x9]
+    short_9x16: [reel_9x16]
+  google_business:
+    post_square: [gbp_square]
+    post_landscape: [gbp_landscape]
+  mailchimp:
+    campaign_email: [mailchimp_header_600w, mailchimp_inline_1200w]
+  patreon:
+    patron_update: [patreon_post_4x5]
