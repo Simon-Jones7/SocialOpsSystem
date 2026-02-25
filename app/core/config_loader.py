@@ -1,32 +1,25 @@
-from pathlib import Path
-from typing import Any
+from fastapi import APIRouter
+from pydantic import BaseModel, Field
 
-import yaml
+from app.core.config_loader import ConfigLoader
+from app.models.planner import Item, PlannerResult
+from app.services.planner import run_planner
 
-
-CONFIG_FILES = [
-    "planner_settings_v1.yaml",
-    "cadence_policy_v1.yaml",
-    "export_specs_v1.yaml",
-    "export_mapping_v1.yaml",
-    "platform_weights.yaml",
-    "scoring_rules.yaml",
-    "campaign_templates.yaml",
-    "audience_schema.yaml",
-    "dependency_rules.yaml",
-]
+router = APIRouter(prefix="/planner", tags=["planner"])
 
 
-class ConfigLoader:
-    def __init__(self, config_dir: str = "config") -> None:
-        self.config_dir = Path(config_dir)
+class RunPlannerRequest(BaseModel):
+    items: list[Item] = Field(default_factory=list)
+    campaigns: list[dict] = Field(default_factory=list)
+    objectives: list[dict] = Field(default_factory=list)
 
-    def load_all(self) -> dict[str, Any]:
-        loaded: dict[str, Any] = {}
-        for filename in CONFIG_FILES:
-            file_path = self.config_dir / filename
-            if not file_path.exists():
-                raise FileNotFoundError(f"Missing config file: {file_path}")
-            with file_path.open("r", encoding="utf-8") as f:
-                loaded[filename] = yaml.safe_load(f) or {}
-        return loaded
+
+@router.post("/run", response_model=PlannerResult)
+def run_planner_endpoint(payload: RunPlannerRequest) -> PlannerResult:
+    configs = ConfigLoader().load_all()
+    return run_planner(
+        items=payload.items,
+        campaigns=payload.campaigns,
+        objectives=payload.objectives,
+        configs=configs,
+    )

@@ -1,16 +1,36 @@
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
+
+
+class ItemLinks(BaseModel):
+    eventbrite: str | None = None
+
+
+class ItemAssets(BaseModel):
+    photo_count: int = 0
+    video_count: int = 0
+
+
+class Item(BaseModel):
+    id: str
+    item_type: str
+    audiences: list[str] = Field(default_factory=list)
+    event_start: datetime | None = None
+    links: ItemLinks = Field(default_factory=ItemLinks)
+    assets: ItemAssets = Field(default_factory=ItemAssets)
 
 
 class DraftCandidate(BaseModel):
     item_id: str
     platform: str
     format: str
+    blocked: bool = False
+    block_reason: str | None = None
     score: float | None = None
     score_breakdown: dict[str, Any] = Field(default_factory=dict)
     suggested_schedule_datetime: str | None = None
-    blocked: bool = False
     dependency_warnings: list[str] = Field(default_factory=list)
 
 
