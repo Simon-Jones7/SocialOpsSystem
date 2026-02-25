@@ -87,6 +87,16 @@ def run_planner(
     Scoring/scheduling/export logic intentionally not implemented.
     """
     items = items or []
+
+    # Coerce incoming dict items (API payload) into Item models
+    coerced_items: list[Item] = []
+    for it in items:
+        if isinstance(it, Item):
+            coerced_items.append(it)
+        else:
+            coerced_items.append(Item.model_validate(it))
+    items = coerced_items
+
     campaigns = campaigns or []
     objectives = objectives or []
     configs = configs or {}
