@@ -7,6 +7,18 @@ planning:
   allowed_horizon_days: [14, 28, 56]
   weekly_cycle_day: monday
 
+cooldowns:
+  instagram: 14
+  facebook: 14
+
+push_windows:
+  high:
+    within_days: 10
+    cooldown_days: 5
+  max:
+    within_days: 7
+    cooldown_days: 2
+    
 modes:
   default: normal
   allowed: [baseline_only, normal, event_push]

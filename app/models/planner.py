@@ -18,6 +18,8 @@ class Item(BaseModel):
     item_type: str
     audiences: list[str] = Field(default_factory=list)
     event_start: datetime | None = None
+    series_id: str | None = None
+    push_level: str | None = None
     links: ItemLinks = Field(default_factory=ItemLinks)
     assets: ItemAssets = Field(default_factory=ItemAssets)
 
@@ -44,6 +46,7 @@ class ApprovalQueueEntry(BaseModel):
     draft_id: str
     item_id: str
     platform: str
+    scheduled_datetime: str | None = None
     status: str = "proposed"
 
 
