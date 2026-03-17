@@ -16,6 +16,7 @@ DEFAULT_CONFIG_FILES = [
     "campaign_templates.yaml",
     "audience_schema.yaml",
     "dependency_rules.yaml",
+    "eligibility_windows_v1.yaml",
     "planner_settings_v1.yaml",
 ]
 

@@ -2,20 +2,20 @@
 
 This repository contains:
 
-- A **v1 configuration scaffold** for the planner engine (`config/*.yaml`)
+- A **v1 configuration scaffold** for the planner engine (`configs/*.yaml`)
 - A **backend skeleton** using FastAPI + Docker Compose
 
 ## Included config files
 
-- `config/planner_settings_v1.yaml` — global defaults (horizon, mode, thresholds, email spacing)
-- `config/cadence_policy_v1.yaml` — platform cadence, baseline slots, extra post triggers
-- `config/platform_weights.yaml` — base weights and per-format biases
-- `config/scoring_rules.yaml` — candidate generation formats and scoring components
-- `config/export_specs_v1.yaml` — export format specs by media output type
-- `config/export_mapping_v1.yaml` — maps platform+format to export specs
-- `config/campaign_templates.yaml` — phase templates and multipliers
-- `config/audience_schema.yaml` — audience affinity multipliers per platform
-- `config/dependency_rules.yaml` — gating rules and block messages
+- `configs/planner_settings_v1.yaml` — global defaults (horizon, mode, thresholds, email spacing)
+- `configs/cadence_policy_v1.yaml` — platform cadence, baseline slots, extra post triggers
+- `configs/platform_weights.yaml` — base weights and per-format biases
+- `configs/scoring_rules.yaml` — candidate generation formats and scoring components
+- `configs/export_specs_v1.yaml` — export format specs by media output type
+- `configs/export_mapping_v1.yaml` — maps platform+format to export specs
+- `configs/campaign_templates.yaml` — phase templates and multipliers
+- `configs/audience_schema.yaml` — audience affinity multipliers per platform
+- `configs/dependency_rules.yaml` — gating rules and block messages
 
 ## Backend skeleton
 

@@ -18,4 +18,4 @@ app.include_router(approvals_router)
 
 @app.on_event("startup")
 def startup():
-    ensure_tables()
+    pass

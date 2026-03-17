@@ -1,0 +1,24 @@
+defaults:
+  pre_event_latest_days: 0        # after event_start, stop
+  post_event_earliest_days: 0
+  post_event_latest_days: 0
+  max_posts_per_platform_in_window: 99
+
+by_item_type:
+  event_promotion:
+    pre_event_latest_days: 0
+    max_posts_per_platform_in_window: 2
+
+  event_reminder:
+    pre_event_earliest_days: 7
+    pre_event_latest_days: 0
+    max_posts_per_platform_in_window: 1
+
+  event_recap:
+    post_event_earliest_days: 1
+    post_event_latest_days: 10
+    max_posts_per_platform_in_window: 1
+
+  monthly_summary:
+    monthly_once: true
+    max_posts_per_platform_in_window: 1

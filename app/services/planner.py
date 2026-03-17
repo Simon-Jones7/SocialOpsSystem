@@ -5,6 +5,75 @@ from app.models.planner import DraftCandidate, Item, PlannerResult
 
 from app.services.approvals_store import get_all_approvals
 
+def _eligibility_rules_for(item: Item, eligibility_cfg: dict) -> dict:
+    by_type = (eligibility_cfg.get("by_item_type") or {})
+    defaults = (eligibility_cfg.get("defaults") or {})
+    rules = dict(defaults)
+    rules.update(by_type.get(item.item_type, {}))
+    return rules
+
+
+def _is_within_event_window(item: Item, now: datetime, rules: dict) -> bool:
+    if not item.event_start:
+        return True  # no event anchor → always eligible unless other rules block
+
+    event_dt = item.event_start
+
+    # Pre-event bounds
+    pre_earliest = rules.get("pre_event_earliest_days")
+    pre_latest = rules.get("pre_event_latest_days")
+
+    if now <= event_dt:
+        if pre_earliest is not None:
+            if now < event_dt - timedelta(days=int(pre_earliest)):
+                return False
+        if pre_latest is not None:
+            if now > event_dt - timedelta(days=int(pre_latest)):
+                return False
+
+    # Post-event bounds
+    post_earliest = rules.get("post_event_earliest_days")
+    post_latest = rules.get("post_event_latest_days")
+
+    if now > event_dt:
+        if post_earliest is not None:
+            if now < event_dt + timedelta(days=int(post_earliest)):
+                return False
+        if post_latest is not None:
+            if now > event_dt + timedelta(days=int(post_latest)):
+                return False
+
+    return True
+
+
+def _already_scheduled_count(
+    item: Item,
+    platform: str,
+    scheduled: list[DraftCandidate],
+    window_start: datetime | None,
+    window_end: datetime | None,
+) -> int:
+    count = 0
+    for s in scheduled:
+        if s.item_id != item.id:
+            continue
+        if s.platform != platform:
+            continue
+
+        scheduled_dt_raw = getattr(s, "suggested_schedule_datetime", None)
+        if not scheduled_dt_raw:
+            continue
+
+        scheduled_dt = datetime.fromisoformat(scheduled_dt_raw)
+
+        if window_start and scheduled_dt < window_start:
+            continue
+        if window_end and scheduled_dt > window_end:
+            continue
+
+        count += 1
+    return count
+
 
 def _next_monday(d: datetime) -> datetime:
     # Monday = 0
@@ -257,6 +326,7 @@ def run_planner(
     planner_settings = configs.get("planner_settings_v1") or {}
     cooldowns = planner_settings.get("cooldowns") or {}
     push_windows = planner_settings.get("push_windows") or {}
+    eligibility_cfg = configs.get("eligibility_windows_v1", {})
 
     stored_approvals = get_all_approvals()
 
@@ -355,6 +425,50 @@ def run_planner(
             last = last_scheduled.get(key)
             if last and (slot_dt - last).days <= cd_days:
                 continue
+            
+
+
+            # -----------------------
+            # Eligibility window gate
+            # -----------------------
+
+            rules = _eligibility_rules_for(it, eligibility_cfg)
+
+            # Event window check (use slot_dt as reference time)
+            if not _is_within_event_window(it, slot_dt, rules):
+                continue
+
+            # Per-platform max posts in window
+            max_posts = rules.get("max_posts_per_platform_in_window")
+
+            if max_posts is not None:
+                event_dt = it.event_start
+                window_start = None
+                window_end = None
+
+                if event_dt:
+                    if rules.get("pre_event_earliest_days") is not None:
+                        window_start = event_dt - timedelta(
+                            days=int(rules.get("pre_event_earliest_days"))
+                        )
+                    if rules.get("post_event_latest_days") is not None:
+                        window_end = event_dt + timedelta(
+                            days=int(rules.get("post_event_latest_days"))
+                        )
+
+                already = _already_scheduled_count(
+                    it,
+                    platform,
+                    eligible,  # already accepted in this run
+                    window_start,
+                    window_end,
+                )
+
+                if already >= int(max_posts):
+                    continue
+
+
+
 
             eligible.append(c)
 
